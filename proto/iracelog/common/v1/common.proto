@@ -1,0 +1,20 @@
+syntax = "proto3";
+package iracelog.common.v1;
+
+enum TrackWetness {
+  TRACK_WETNESS_UNSPECIFIED = 0;
+  TRACK_WETNESS_DRY = 1;
+  TRACK_WETNESS_MOSTLY_DRY = 2;
+  TRACK_WETNESS_VERY_LIGHTLY_WET = 3;
+  TRACK_WETNESS_LIGHTLY_WET = 4;
+  TRACK_WETNESS_MODERATELY_WET = 5;
+  TRACK_WETNESS_VERY_WET = 6;
+  TRACK_WETNESS_EXTREMELY_WET = 7;
+}
+
+message EventSelector {
+  oneof arg {
+    int32 id = 1;
+    string key = 2;
+  }
+}

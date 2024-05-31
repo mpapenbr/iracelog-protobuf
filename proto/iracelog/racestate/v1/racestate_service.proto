@@ -1,0 +1,86 @@
+syntax = "proto3";
+package iracelog.racestate.v1;
+
+import "google/protobuf/timestamp.proto";
+import "iracelog/car/v1/car.proto";
+import "iracelog/common/v1/common.proto";
+import "iracelog/racestate/v1/racestate.proto";
+import "iracelog/speedmap/v1/speedmap.proto";
+
+service RaceStateService {
+  rpc PublishState(PublishStateRequest) returns (PublishStateResponse);
+  rpc PublishSpeedmap(PublishSpeedmapRequest) returns (PublishSpeedmapResponse);
+  rpc PublishDriverData(PublishDriverDataRequest) returns (PublishDriverDataResponse);
+  rpc PublishEventExtraInfo(PublishEventExtraInfoRequest) returns (PublishEventExtraInfoResponse);
+
+  rpc GetStates(GetStatesRequest) returns (GetStatesResponse);
+  rpc GetSpeedmaps(GetSpeedmapsRequest) returns (GetSpeedmapsResponse);
+  rpc GetDriverData(GetDriverDataRequest) returns (GetDriverDataResponse);
+}
+
+message PublishStateRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  iracelog.racestate.v1.Session session = 3;
+  repeated iracelog.racestate.v1.Car cars = 4;
+  repeated iracelog.racestate.v1.Message messages = 5;
+}
+message PublishSpeedmapRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  iracelog.speedmap.v1.Speedmap speedmap = 3;
+}
+
+// sent when driver data changed
+message PublishDriverDataRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  repeated iracelog.car.v1.CarEntry entries = 3;
+  repeated iracelog.car.v1.CarInfo cars = 4;
+  repeated iracelog.car.v1.CarClass car_classes = 5;
+  float session_time = 6;
+  map<uint32, string> current_drivers = 7;
+}
+
+// sent when event is finished. Backend decides what to do with these informations
+message PublishEventExtraInfoRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  iracelog.racestate.v1.ExtraInfo extra_info = 3;
+}
+
+message PublishStateResponse {}
+message PublishSpeedmapResponse {}
+message PublishDriverDataResponse {}
+message PublishEventExtraInfoResponse {}
+
+message GetStatesRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp start = 2;
+  int32 num = 3;
+}
+message GetSpeedmapsRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp start = 2;
+  int32 num = 3;
+}
+message GetDriverDataRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  google.protobuf.Timestamp start = 2;
+  int32 num = 3;
+}
+
+message GetStatesResponse {
+  repeated PublishStateRequest states = 1;
+  google.protobuf.Timestamp last_ts = 2;
+}
+
+message GetSpeedmapsResponse {
+  repeated PublishSpeedmapRequest speedmaps = 1;
+  google.protobuf.Timestamp last_ts = 2;
+}
+
+message GetDriverDataResponse {
+  repeated PublishDriverDataRequest driver_data = 1;
+  google.protobuf.Timestamp last_ts = 2;
+}

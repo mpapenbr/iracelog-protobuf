@@ -1,0 +1,18 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+// RaceGraph
+
+message RaceGraph {
+  int32 lap_no = 1;
+  string car_class = 2;
+  repeated GapInfo gaps = 3;
+}
+
+message GapInfo {
+  string car_num = 1;
+  int32 lap_no = 2;
+  int32 pos = 3;
+  int32 pic = 4;
+  float gap = 5;
+}

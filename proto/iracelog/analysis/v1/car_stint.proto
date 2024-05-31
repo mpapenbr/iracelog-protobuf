@@ -1,0 +1,20 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+// CarStint
+message CarStint {
+  string car_num = 1;
+  StintInfo current = 2;
+  repeated StintInfo history = 3;
+}
+
+message StintInfo {
+  string car_num = 1;
+  float enter_time = 2;
+  float exit_time = 3;
+  int32 lap_enter = 4;
+  int32 lap_exit = 5;
+  float stint_time = 6;
+  int32 num_laps = 7;
+  bool is_current_stint = 8;
+}

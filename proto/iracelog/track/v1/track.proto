@@ -1,0 +1,24 @@
+syntax = "proto3";
+package iracelog.track.v1;
+
+message Track {
+  uint32 id = 1;
+  string name = 2;
+  string short_name = 3;
+  string config = 4;
+  float length = 5;
+  repeated Sector sectors = 6;
+  PitInfo pit_info = 7;
+  float pit_speed = 8;
+}
+
+message Sector {
+  uint32 num = 1;
+  float start_pct = 2;
+}
+
+message PitInfo {
+  float entry = 1;
+  float exit = 2;
+  float lane_length = 3;
+}

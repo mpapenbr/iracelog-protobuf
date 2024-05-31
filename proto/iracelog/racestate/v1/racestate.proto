@@ -1,0 +1,108 @@
+syntax = "proto3";
+package iracelog.racestate.v1;
+
+import "google/protobuf/timestamp.proto";
+import "iracelog/common/v1/common.proto";
+import "iracelog/track/v1/track.proto";
+
+message Car {
+  int32 car_idx = 1;
+  CarState state = 2;
+  int32 pos = 3;
+  int32 pic = 4;
+  int32 lap = 5;
+  int32 lc = 6;
+  float track_pos = 7;
+  uint32 pitstops = 8;
+  uint32 stint_lap = 9;
+  float speed = 10;
+  float dist = 11;
+  float interval = 12;
+  float gap = 13;
+  TireCompound tire_compound = 14;
+  TimeWithMarker last = 15;
+  TimeWithMarker best = 16;
+  repeated TimeWithMarker sectors = 17;
+}
+
+message TireCompound {
+  uint32 raw_value = 1;
+}
+message TimeWithMarker {
+  float time = 1;
+  TimeMarker marker = 2;
+}
+
+enum TimeMarker {
+  TIME_MARKER_UNSPECIFIED = 0;
+  TIME_MARKER_OVERALL_BEST = 1;
+  TIME_MARKER_CLASS_BEST = 2;
+  TIME_MARKER_CAR_BEST = 3;
+  TIME_MARKER_PERSONAL_BEST = 4;
+  TIME_MARKER_OLD_VALUE = 5;
+}
+
+message Session {
+  uint32 session_num = 1;
+  float session_time = 2;
+  float time_remain = 3;
+  int32 laps_remain = 4;
+  uint32 time_of_day = 5;
+  float air_temp = 6;
+  float air_density = 7;
+  float air_pressure = 8;
+  float track_temp = 9;
+  iracelog.common.v1.TrackWetness track_wetness = 10;
+  float wind_dir = 11;
+  float wind_vel = 12;
+  float precipitation = 13;
+  string flag_state = 14;
+  int32 session_state_raw = 15;
+  uint32 session_flags_raw = 16;
+}
+
+enum CarState {
+  CAR_STATE_UNSPECIFIED = 0;
+  CAR_STATE_INIT = 1;
+  CAR_STATE_RUN = 2;
+  CAR_STATE_PIT = 3;
+  CAR_STATE_SLOW = 4;
+  CAR_STATE_FIN = 5;
+  CAR_STATE_OUT = 6;
+}
+
+message Message {
+  MessageType type = 1;
+  MessageSubType sub_type = 2;
+  uint32 car_idx = 3;
+  string car_num = 4;
+  string car_class = 5;
+  string msg = 6;
+}
+
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  MESSAGE_TYPE_PITS = 1;
+  MESSAGE_TYPE_TIMING = 2;
+}
+enum MessageSubType {
+  MESSAGE_SUB_TYPE_UNSPECIFIED = 0;
+  MESSAGE_SUB_TYPE_DRIVER = 1;
+  MESSAGE_SUB_TYPE_RACE_CONTROL = 2;
+}
+
+message MessageContainer {
+  Message message = 1;
+  float session_time = 2;
+  google.protobuf.Timestamp timestamp = 3;
+}
+
+message StateContainer {
+  Session session = 1;
+  repeated Car cars = 2;
+  repeated MessageContainer messages = 3;
+}
+
+message ExtraInfo {
+  iracelog.track.v1.PitInfo pit_info = 1;
+}

@@ -1,0 +1,42 @@
+syntax = "proto3";
+package iracelog.car.v1;
+
+import "iracelog/driver/v1/driver.proto";
+
+message CarEntry {
+  Car car = 1;
+  iracelog.driver.v1.Team team = 2;
+  repeated iracelog.driver.v1.Driver drivers = 3;
+}
+
+message Car {
+  uint32 car_id = 1;
+  uint32 car_idx = 2;
+  int32 car_class_id = 3;
+  string name = 4;
+  string car_number = 5;
+  int32 car_number_raw = 6;
+}
+message CarClass {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message CarInfo {
+  string name = 1;
+  string name_short = 2;
+  uint32 car_id = 3;
+  int32 car_class_id = 4;
+  string car_class_name = 5;
+  float fuel_pct = 6;
+  float power_adjust = 7;
+  float weight_penalty = 8;
+  int32 dry_tire_sets = 9;
+}
+
+message CarContainer {
+  repeated CarEntry entries = 1;
+  repeated CarInfo cars = 2;
+  repeated CarClass car_classes = 3;
+  map<uint32, string> current_drivers = 4;
+}

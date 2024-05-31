@@ -1,0 +1,62 @@
+syntax = "proto3";
+package iracelog.event.v1;
+
+import "iracelog/analysis/v1/analysis.proto";
+import "iracelog/car/v1/car.proto";
+import "iracelog/common/v1/common.proto";
+import "iracelog/event/v1/event.proto";
+import "iracelog/racestate/v1/racestate.proto";
+import "iracelog/speedmap/v1/speedmap.proto";
+import "iracelog/track/v1/track.proto";
+
+message GetEventsRequest {}
+
+message GetEventRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+}
+
+message GetLatestEventsRequest {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+message GetLatestEventsResponse {
+  repeated Event events = 1;
+}
+
+message GetEventResponse {
+  Event event = 1;
+  iracelog.track.v1.Track track = 2;
+  iracelog.analysis.v1.Analysis analysis = 3;
+  iracelog.racestate.v1.StateContainer state = 4;
+  iracelog.car.v1.CarContainer car = 5;
+  iracelog.speedmap.v1.Speedmap speedmap = 6;
+}
+
+message GetEventsResponse {
+  Event event = 1;
+}
+message CreateEventRequest {
+  Event event = 1;
+}
+message CreateEventResponse {
+  Event event = 1;
+}
+
+message DeleteEventRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+}
+message DeleteEventResponse {}
+
+service EventService {
+  // returns the events as stream (use GetLatestEvents if you want a single response)
+  rpc GetEvents(GetEventsRequest) returns (stream GetEventsResponse) {}
+
+  // returns the event along with all data required for the frontend
+  rpc GetEvent(GetEventRequest) returns (GetEventResponse) {}
+
+  // deletes an event from the database
+  rpc DeleteEvent(DeleteEventRequest) returns (DeleteEventResponse) {}
+
+  // retrieves events from the database
+  rpc GetLatestEvents(GetLatestEventsRequest) returns (GetLatestEventsResponse) {}
+}

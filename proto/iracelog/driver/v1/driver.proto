@@ -1,0 +1,20 @@
+syntax = "proto3";
+package iracelog.driver.v1;
+
+message Driver {
+  int32 id = 1;
+  uint32 car_idx = 2;
+  string name = 3;
+  int32 i_rating = 4;
+  string initials = 5;
+  int32 lic_level = 6;
+  int32 lic_sub_level = 7;
+  string lic_string = 8;
+  string abbrev_name = 9;
+}
+
+message Team {
+  uint32 id = 1;
+  uint32 car_idx = 2;
+  string name = 3;
+}

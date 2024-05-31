@@ -1,0 +1,11 @@
+version: v1
+name: buf.build/mpapenbr/iracelog
+deps:
+  - buf.build/protocolbuffers/wellknowntypes
+
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT

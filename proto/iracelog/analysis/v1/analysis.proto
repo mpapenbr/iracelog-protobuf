@@ -1,0 +1,19 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+import "iracelog/analysis/v1/car_compute_state.proto";
+import "iracelog/analysis/v1/car_laps.proto";
+import "iracelog/analysis/v1/car_occupancy.proto";
+import "iracelog/analysis/v1/car_pit.proto";
+import "iracelog/analysis/v1/car_stint.proto";
+import "iracelog/analysis/v1/racegraph.proto";
+
+message Analysis {
+  repeated CarOccupancy car_occupancies = 1;
+  repeated CarLaps car_laps = 2;
+  repeated CarPit car_pits = 3;
+  repeated CarStint car_stints = 4;
+  repeated CarComputeState car_compute_states = 5;
+  repeated RaceGraph race_graph = 6;
+  repeated string race_order = 7;
+}

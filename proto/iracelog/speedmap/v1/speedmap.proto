@@ -1,0 +1,21 @@
+syntax = "proto3";
+package iracelog.speedmap.v1;
+
+import "iracelog/common/v1/common.proto";
+
+message Speedmap {
+  uint32 chunk_size = 1;
+  uint32 time_of_day = 2;
+  float track_temp = 3;
+  float leader_track_pos = 4;
+  float session_time = 5;
+  iracelog.common.v1.TrackWetness track_wetness = 6;
+  float precipitation = 7;
+
+  map<string, ClassData> data = 8;
+}
+
+message ClassData {
+  float laptime = 1;
+  repeated float chunk_speeds = 2;
+}

@@ -1,0 +1,34 @@
+syntax = "proto3";
+package iracelog.event.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Event
+message Event {
+  uint32 id = 1;
+  string key = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp event_time = 5;
+  string racelogger_version = 6;
+  bool team_racing = 7;
+  bool multi_class = 8;
+  uint32 num_car_types = 9;
+  uint32 num_car_classes = 10;
+  int32 ir_session_id = 11;
+  uint32 track_id = 12;
+  repeated Session sessions = 13;
+  float pit_speed = 14;
+  ReplayInfo replay_info = 15;
+}
+
+message Session {
+  uint32 num = 1;
+  string name = 2;
+}
+
+message ReplayInfo {
+  google.protobuf.Timestamp min_timestamp = 1;
+  float min_session_time = 2;
+  float max_session_time = 3;
+}

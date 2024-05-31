@@ -1,0 +1,16 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+import "iracelog/analysis/v1/analysis.proto";
+import "iracelog/common/v1/common.proto";
+
+message GetAnalysisRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+}
+message GetAnalysisResponse {
+  Analysis analysis = 1;
+}
+
+service AnalysisService {
+  rpc GetAnalysis(GetAnalysisRequest) returns (GetAnalysisResponse) {}
+}

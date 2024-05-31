@@ -1,0 +1,119 @@
+syntax = "proto3";
+package iracelog.livedata.v1;
+
+import "google/protobuf/timestamp.proto";
+import "iracelog/analysis/v1/analysis.proto";
+import "iracelog/analysis/v1/car_compute_state.proto";
+import "iracelog/analysis/v1/car_laps.proto";
+import "iracelog/analysis/v1/car_occupancy.proto";
+import "iracelog/analysis/v1/car_pit.proto";
+import "iracelog/analysis/v1/car_stint.proto";
+import "iracelog/analysis/v1/racegraph.proto";
+import "iracelog/car/v1/car.proto";
+import "iracelog/common/v1/common.proto";
+import "iracelog/racestate/v1/racestate.proto";
+import "iracelog/speedmap/v1/speedmap.proto";
+
+service LiveDataService {
+  rpc LiveRaceState(LiveRaceStateRequest) returns (stream LiveRaceStateResponse);
+  rpc LiveSpeedmap(LiveSpeedmapRequest) returns (stream LiveSpeedmapResponse);
+  rpc LiveAnalysis(LiveAnalysisRequest) returns (stream LiveAnalysisResponse);
+  rpc LiveCarOccupancies(LiveCarOccupanciesRequest) returns (stream LiveCarOccupanciesResponse);
+  rpc LiveCarPits(LiveCarPitsRequest) returns (stream LiveCarPitsResponse);
+  rpc LiveCarStints(LiveCarStintsRequest) returns (stream LiveCarStintsResponse);
+  rpc LiveDriverData(LiveDriverDataRequest) returns (stream LiveDriverDataResponse);
+
+  /*
+     The first response will include all attributes with all data
+     The following entries of the stream will only include those attributes configured in the request
+  */
+  rpc LiveAnalysisSel(LiveAnalysisSelRequest) returns (stream LiveAnalysisSelResponse);
+}
+
+message LiveRaceStateRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveRaceStateResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  iracelog.racestate.v1.Session session = 2;
+  repeated iracelog.racestate.v1.Car cars = 3;
+  repeated iracelog.racestate.v1.Message messages = 4;
+}
+message LiveSpeedmapRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveSpeedmapResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  iracelog.speedmap.v1.Speedmap speedmap = 2;
+}
+message LiveAnalysisRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveAnalysisResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  iracelog.analysis.v1.Analysis analysis = 2;
+}
+message LiveCarOccupanciesRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveCarOccupanciesResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated iracelog.analysis.v1.CarOccupancy car_occupancies = 2;
+}
+message LiveCarStintsRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveCarStintsResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated iracelog.analysis.v1.CarStint car_stints = 2;
+}
+message LiveCarPitsRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveCarPitsResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated iracelog.analysis.v1.CarPit car_pits = 2;
+}
+message LiveAnalysisSelRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  AnalysisSelector selector = 2;
+}
+message LiveAnalysisSelResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated iracelog.analysis.v1.CarOccupancy car_occupancies = 2;
+  repeated iracelog.analysis.v1.CarLaps car_laps = 3;
+  repeated iracelog.analysis.v1.CarPit car_pits = 4;
+  repeated iracelog.analysis.v1.CarStint car_stints = 5;
+  repeated iracelog.analysis.v1.CarComputeState car_compute_states = 6;
+  repeated iracelog.analysis.v1.RaceGraph race_graph = 7;
+  repeated string race_order = 8;
+}
+message AnalysisSelector {
+  repeated AnalysisComponent components = 1;
+  // used to restrict the response to these last number of entries for each car
+  uint32 car_laps_num_tail = 2;
+  // used to restrict the response to these last number of entries for each car
+  uint32 race_graph_num_tail = 3;
+}
+enum AnalysisComponent {
+  ANALYSIS_COMPONENT_UNSPECIFIED = 0;
+  ANALYSIS_COMPONENT_CAR_OCCUPANCIES = 1;
+  ANALYSIS_COMPONENT_CAR_LAPS = 2;
+  ANALYSIS_COMPONENT_CAR_PITS = 3;
+  ANALYSIS_COMPONENT_CAR_STINTS = 4;
+  ANALYSIS_COMPONENT_CAR_COMPUTE_STATES = 5;
+  ANALYSIS_COMPONENT_RACE_GRAPH = 6;
+  ANALYSIS_COMPONENT_RACE_ORDER = 7;
+}
+
+message LiveDriverDataRequest {
+  iracelog.common.v1.EventSelector event = 1;
+}
+message LiveDriverDataResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated iracelog.car.v1.CarEntry entries = 2;
+  repeated iracelog.car.v1.CarInfo cars = 3;
+  repeated iracelog.car.v1.CarClass car_classes = 4;
+  float session_time = 5;
+  map<uint32, string> current_drivers = 6;
+}

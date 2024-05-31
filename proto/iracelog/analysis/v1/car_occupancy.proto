@@ -1,0 +1,22 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+// CarOccupancy contains information which drivers used a specific car
+message CarOccupancy {
+  // in team races this is the team name, otherwise the driver name
+  string name = 1;
+  string car_num = 2;
+  string car_class = 3;
+  string current_driver_name = 4;
+  repeated Driver drivers = 5;
+}
+
+message Driver {
+  string name = 1;
+  repeated SeatTime seat_times = 2;
+}
+
+message SeatTime {
+  float enter_car_time = 1;
+  float leave_car_time = 2;
+}

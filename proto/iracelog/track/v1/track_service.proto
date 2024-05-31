@@ -1,0 +1,23 @@
+syntax = "proto3";
+package iracelog.track.v1;
+
+import "iracelog/track/v1/track.proto";
+
+service TrackService {
+  rpc EnsureTrack(EnsureTrackRequest) returns (EnsureTrackResponse);
+  rpc UpdatePitInfo(UpdatePitInfoRequest) returns (UpdatePitInfoResponse);
+}
+
+message EnsureTrackRequest {
+  Track track = 1;
+}
+message EnsureTrackResponse {
+  Track track = 1;
+}
+message UpdatePitInfoRequest {
+  uint32 id = 1;
+  PitInfo pit_info = 2;
+}
+message UpdatePitInfoResponse {
+  Track track = 1;
+}

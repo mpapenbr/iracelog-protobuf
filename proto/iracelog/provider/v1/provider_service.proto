@@ -1,0 +1,71 @@
+syntax = "proto3";
+package iracelog.provider.v1;
+
+import "google/protobuf/timestamp.proto";
+import "iracelog/common/v1/common.proto";
+import "iracelog/event/v1/event.proto";
+import "iracelog/track/v1/track.proto";
+
+service ProviderService {
+  rpc RegisterEvent(RegisterEventRequest) returns (RegisterEventResponse);
+  rpc ListLiveEvents(ListLiveEventsRequest) returns (ListLiveEventsResponse);
+  rpc UnregisterEvent(UnregisterEventRequest) returns (UnregisterEventResponse);
+  rpc UnregisterAll(UnregisterAllRequest) returns (UnregisterAllResponse);
+  rpc VersionCheck(VersionCheckRequest) returns (VersionCheckResponse);
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+
+message RegisterEventRequest {
+  string key = 1;
+  iracelog.event.v1.Event event = 2;
+  iracelog.track.v1.Track track = 3;
+  // used for testing or performance aspects
+  RecordingMode recording_mode = 4;
+}
+
+message RegisterEventResponse {
+  iracelog.event.v1.Event event = 1;
+}
+
+message UnregisterEventRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+}
+
+message UnregisterEventResponse {}
+
+message UnregisterAllRequest {}
+message UnregisterAllResponse {
+  repeated LiveEventContainer events = 1;
+}
+
+message ListLiveEventsRequest {}
+message LiveEventContainer {
+  iracelog.event.v1.Event event = 1;
+  iracelog.track.v1.Track track = 2;
+}
+message ListLiveEventsResponse {
+  repeated LiveEventContainer events = 1;
+}
+
+enum RecordingMode {
+  RECORDING_MODE_UNSPECIFIED = 0;
+  RECORDING_MODE_PERSIST = 1;
+  RECORDING_MODE_DO_NOT_PERSIST = 2;
+}
+
+message VersionCheckRequest {
+  string racelogger_version = 1;
+}
+message VersionCheckResponse {
+  string server_version = 1;
+  string provided_racelogger_version = 2;
+  string supported_racelogger_version = 3;
+  bool racelogger_compatible = 4;
+}
+message PingRequest {
+  int32 num = 1;
+}
+message PingResponse {
+  int32 num = 1;
+  google.protobuf.Timestamp timestamp = 2;
+}

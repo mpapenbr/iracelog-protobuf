@@ -1,0 +1,14 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+// CarLaps
+message CarLaps {
+  string car_num = 1;
+  repeated Lap laps = 2;
+}
+
+// Lap
+message Lap {
+  int32 lap_no = 1;
+  float lap_time = 2;
+}
