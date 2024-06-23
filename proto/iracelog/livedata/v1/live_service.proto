@@ -9,6 +9,7 @@ import "iracelog/analysis/v1/car_occupancy.proto";
 import "iracelog/analysis/v1/car_pit.proto";
 import "iracelog/analysis/v1/car_stint.proto";
 import "iracelog/analysis/v1/racegraph.proto";
+import "iracelog/analysis/v1/snapshot_data.proto";
 import "iracelog/car/v1/car.proto";
 import "iracelog/common/v1/common.proto";
 import "iracelog/racestate/v1/racestate.proto";
@@ -22,6 +23,7 @@ service LiveDataService {
   rpc LiveCarPits(LiveCarPitsRequest) returns (stream LiveCarPitsResponse);
   rpc LiveCarStints(LiveCarStintsRequest) returns (stream LiveCarStintsResponse);
   rpc LiveDriverData(LiveDriverDataRequest) returns (stream LiveDriverDataResponse);
+  rpc LiveSnapshotData(LiveSnapshotDataRequest) returns (stream LiveSnapshotDataResponse);
 
   /*
      The first response will include all attributes with all data
@@ -87,6 +89,7 @@ message LiveAnalysisSelResponse {
   repeated iracelog.analysis.v1.CarComputeState car_compute_states = 6;
   repeated iracelog.analysis.v1.RaceGraph race_graph = 7;
   repeated string race_order = 8;
+  repeated iracelog.analysis.v1.SnapshotData snapshots = 9;
 }
 message AnalysisSelector {
   repeated AnalysisComponent components = 1;
@@ -116,4 +119,20 @@ message LiveDriverDataResponse {
   repeated iracelog.car.v1.CarClass car_classes = 4;
   float session_time = 5;
   map<uint32, string> current_drivers = 6;
+}
+
+message LiveSnapshotDataRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  SnapshotStartMode start_from = 2;
+}
+enum SnapshotStartMode {
+  SNAPSHOT_START_MODE_UNSPECIFIED = 0;
+  SNAPSHOT_START_MODE_BEGIN = 1;
+  SNAPSHOT_START_MODE_CURRENT = 2;
+}
+
+message LiveSnapshotDataResponse {
+  // this is the real time when this message was sent
+  google.protobuf.Timestamp timestamp = 1;
+  iracelog.analysis.v1.SnapshotData snapshot_data = 2;
 }
