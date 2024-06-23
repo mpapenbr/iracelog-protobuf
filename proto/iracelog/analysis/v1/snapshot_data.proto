@@ -1,0 +1,21 @@
+syntax = "proto3";
+package iracelog.analysis.v1;
+
+import "google/protobuf/timestamp.proto";
+import "iracelog/common/v1/common.proto";
+
+// contains snapshot data over a race. This is used to show the certain data history over the complete event duration
+// we use this for data that is not directly related to laps
+// a use case is to collect these attributes for every 2min in a 12h race
+message SnapshotData {
+  // this is the real time of the corresponding speedmap message on which these data are based
+  google.protobuf.Timestamp record_stamp = 1;
+  float session_time = 2;
+  uint32 time_of_day = 3;
+  float air_temp = 4;
+  float track_temp = 5;
+  iracelog.common.v1.TrackWetness track_wetness = 6;
+  float precipitation = 7;
+  // avg laptime by car class
+  map<string, float> car_class_laptimes = 8;
+}

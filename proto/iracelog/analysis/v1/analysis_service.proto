@@ -2,6 +2,7 @@ syntax = "proto3";
 package iracelog.analysis.v1;
 
 import "iracelog/analysis/v1/analysis.proto";
+import "iracelog/analysis/v1/snapshot_data.proto";
 import "iracelog/common/v1/common.proto";
 
 message GetAnalysisRequest {
@@ -9,6 +10,7 @@ message GetAnalysisRequest {
 }
 message GetAnalysisResponse {
   Analysis analysis = 1;
+  repeated SnapshotData snapshots = 2;
 }
 
 service AnalysisService {

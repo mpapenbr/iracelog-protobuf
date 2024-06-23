@@ -2,6 +2,7 @@ syntax = "proto3";
 package iracelog.event.v1;
 
 import "iracelog/analysis/v1/analysis.proto";
+import "iracelog/analysis/v1/snapshot_data.proto";
 import "iracelog/car/v1/car.proto";
 import "iracelog/common/v1/common.proto";
 import "iracelog/event/v1/event.proto";
@@ -30,6 +31,7 @@ message GetEventResponse {
   iracelog.racestate.v1.StateContainer state = 4;
   iracelog.car.v1.CarContainer car = 5;
   iracelog.speedmap.v1.Speedmap speedmap = 6;
+  repeated iracelog.analysis.v1.SnapshotData snapshots = 7;
 }
 
 message GetEventsResponse {
