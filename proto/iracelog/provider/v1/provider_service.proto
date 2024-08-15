@@ -25,6 +25,8 @@ message RegisterEventRequest {
 
 message RegisterEventResponse {
   iracelog.event.v1.Event event = 1;
+  // contains the track from the DB, otherwise the provided track of the request
+  iracelog.track.v1.Track track = 2;
 }
 
 message UnregisterEventRequest {
