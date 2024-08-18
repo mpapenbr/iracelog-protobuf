@@ -1,6 +1,8 @@
 syntax = "proto3";
 package iracelog.analysis.v1;
 
+import "iracelog/common/v1/common.proto";
+
 // CarLaps
 message CarLaps {
   string car_num = 1;
@@ -11,4 +13,11 @@ message CarLaps {
 message Lap {
   int32 lap_no = 1;
   float lap_time = 2;
+  LapInfo lap_info = 3;
+}
+
+// LapInfo
+message LapInfo {
+  iracelog.common.v1.LapMode mode = 1;
+  float time = 2;
 }

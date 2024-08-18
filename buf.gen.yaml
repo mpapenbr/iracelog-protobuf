@@ -20,9 +20,11 @@ plugins:
   #   opt: paths=source_relative
   # - plugin: buf.build/protocolbuffers/java
   #   out: gen/java
-  - remote: buf.build/bufbuild/es
+  - remote: buf.build/bufbuild/es:v2.0.0
     out: gen/es
-    opt: target=ts
+    opt:
+      - target=ts
+      - json_types=true
   - remote: buf.build/community/timostamm-protobuf-ts
     out: gen/es-timo
   - remote: buf.build/connectrpc/es

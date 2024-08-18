@@ -12,6 +12,13 @@ enum TrackWetness {
   TRACK_WETNESS_EXTREMELY_WET = 7;
 }
 
+enum LapMode {
+  LAP_MODE_UNSPECIFIED = 0;
+  LAP_MODE_INLAP = 1;
+  LAP_MODE_OUTLAP = 2;
+  LAP_MODE_INOUTLAP = 3;
+}
+
 message EventSelector {
   oneof arg {
     int32 id = 1;

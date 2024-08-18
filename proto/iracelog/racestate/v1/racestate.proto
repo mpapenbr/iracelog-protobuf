@@ -23,6 +23,7 @@ message Car {
   TimeWithMarker last = 15;
   TimeWithMarker best = 16;
   repeated TimeWithMarker sectors = 17;
+  TimeInfo time_info = 18;
 }
 
 message TireCompound {
@@ -31,6 +32,11 @@ message TireCompound {
 message TimeWithMarker {
   float time = 1;
   TimeMarker marker = 2;
+}
+message TimeInfo {
+  float time = 1;
+  int32 lap_no = 2;
+  iracelog.common.v1.LapMode lap_mode = 3;
 }
 
 enum TimeMarker {
