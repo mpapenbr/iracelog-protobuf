@@ -1,6 +1,8 @@
 syntax = "proto3";
 package iracelog.common.v1;
 
+import "google/protobuf/timestamp.proto";
+
 enum TrackWetness {
   TRACK_WETNESS_UNSPECIFIED = 0;
   TRACK_WETNESS_DRY = 1;
@@ -23,5 +25,11 @@ message EventSelector {
   oneof arg {
     int32 id = 1;
     string key = 2;
+  }
+}
+message StartSelector {
+  oneof arg {
+    google.protobuf.Timestamp start = 1;
+    float session_time = 2;
   }
 }
