@@ -25,6 +25,11 @@ message Event {
 message Session {
   uint32 num = 1;
   string name = 2;
+  // if >0 it contains the max laps of this session
+  int32 laps = 3;
+  // maximum session time in seconds.
+  // Note: for lap limited sessions this is often 86400
+  int32 session_time = 4;
 }
 
 message ReplayInfo {
