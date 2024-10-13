@@ -21,6 +21,20 @@ enum LapMode {
   LAP_MODE_INOUTLAP = 3;
 }
 
+enum SessionType {
+  SESSION_TYPE_UNSPECIFIED = 0;
+  SESSION_TYPE_PRACTICE = 1;
+  SESSION_TYPE_OPEN_QUALIFY = 2;
+  SESSION_TYPE_LONE_QUALIFY = 3;
+  SESSION_TYPE_WARMUP = 4;
+  SESSION_TYPE_RACE = 5;
+}
+
+enum SessionSubType {
+  SESSION_SUB_TYPE_UNSPECIFIED = 0;
+  SESSION_SUB_TYPE_HEAT = 1;
+}
+
 message EventSelector {
   oneof arg {
     int32 id = 1;
