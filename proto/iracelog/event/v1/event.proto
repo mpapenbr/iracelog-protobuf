@@ -2,6 +2,7 @@ syntax = "proto3";
 package iracelog.event.v1;
 
 import "google/protobuf/timestamp.proto";
+import "iracelog/common/v1/common.proto";
 
 // Event
 message Event {
@@ -30,6 +31,8 @@ message Session {
   // maximum session time in seconds.
   // Note: for lap limited sessions this is often 86400
   int32 session_time = 4;
+  iracelog.common.v1.SessionType type = 5;
+  iracelog.common.v1.SessionSubType sub_type = 6;
 }
 
 message ReplayInfo {
