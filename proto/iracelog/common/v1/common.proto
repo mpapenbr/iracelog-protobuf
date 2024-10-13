@@ -33,6 +33,7 @@ enum SessionType {
 enum SessionSubType {
   SESSION_SUB_TYPE_UNSPECIFIED = 0;
   SESSION_SUB_TYPE_HEAT = 1;
+  SESSION_SUB_TYPE_CONSOLATION = 2;
 }
 
 message EventSelector {
