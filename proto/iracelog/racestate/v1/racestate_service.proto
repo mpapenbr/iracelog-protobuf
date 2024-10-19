@@ -56,37 +56,34 @@ message PublishEventExtraInfoResponse {}
 
 message GetStatesRequest {
   iracelog.common.v1.EventSelector event = 1;
-  // use start_point instead
-  google.protobuf.Timestamp start = 2 [deprecated = true];
+  iracelog.common.v1.StartSelector start = 2;
   int32 num = 3;
-  iracelog.common.v1.StartSelector start_point = 4;
 }
 message GetSpeedmapsRequest {
   iracelog.common.v1.EventSelector event = 1;
-  // use start_point instead
-  google.protobuf.Timestamp start = 2 [deprecated = true];
+  iracelog.common.v1.StartSelector start = 2;
   int32 num = 3;
-  iracelog.common.v1.StartSelector start_point = 4;
 }
 message GetDriverDataRequest {
   iracelog.common.v1.EventSelector event = 1;
-  // use start_point instead
-  google.protobuf.Timestamp start = 2 [deprecated = true];
+  iracelog.common.v1.StartSelector start = 2;
   int32 num = 3;
-  iracelog.common.v1.StartSelector start_point = 4;
 }
 
 message GetStatesResponse {
   repeated PublishStateRequest states = 1;
   google.protobuf.Timestamp last_ts = 2;
+  float last_session_time = 3;
 }
 
 message GetSpeedmapsResponse {
   repeated PublishSpeedmapRequest speedmaps = 1;
   google.protobuf.Timestamp last_ts = 2;
+  float last_session_time = 3;
 }
 
 message GetDriverDataResponse {
   repeated PublishDriverDataRequest driver_data = 1;
   google.protobuf.Timestamp last_ts = 2;
+  float last_session_time = 3;
 }
