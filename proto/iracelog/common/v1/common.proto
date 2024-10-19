@@ -45,7 +45,7 @@ message EventSelector {
 }
 message StartSelector {
   oneof arg {
-    google.protobuf.Timestamp start = 1;
+    google.protobuf.Timestamp record_stamp = 1;
     float session_time = 2;
   }
 }
