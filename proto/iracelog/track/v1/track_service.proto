@@ -5,6 +5,8 @@ import "iracelog/track/v1/track.proto";
 
 service TrackService {
   rpc EnsureTrack(EnsureTrackRequest) returns (EnsureTrackResponse);
+  rpc GetTrack(GetTrackRequest) returns (GetTrackResponse);
+  rpc GetTracks(GetTracksRequest) returns (stream GetTracksResponse);
   rpc UpdatePitInfo(UpdatePitInfoRequest) returns (UpdatePitInfoResponse);
 }
 
@@ -19,5 +21,17 @@ message UpdatePitInfoRequest {
   PitInfo pit_info = 2;
 }
 message UpdatePitInfoResponse {
+  Track track = 1;
+}
+
+message GetTrackRequest {
+  uint32 id = 1;
+}
+message GetTracksRequest {}
+
+message GetTrackResponse {
+  Track track = 1;
+}
+message GetTracksResponse {
   Track track = 1;
 }
