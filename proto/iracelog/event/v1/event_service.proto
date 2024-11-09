@@ -49,6 +49,18 @@ message DeleteEventRequest {
 }
 message DeleteEventResponse {}
 
+message UpdateEventRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+  string name = 2;
+  string description = 3;
+  string key = 4;
+  ReplayInfo replay_info = 5;
+}
+
+message UpdateEventResponse {
+  Event event = 1;
+}
+
 service EventService {
   // returns the events as stream (use GetLatestEvents if you want a single response)
   rpc GetEvents(GetEventsRequest) returns (stream GetEventsResponse) {}
@@ -61,4 +73,7 @@ service EventService {
 
   // retrieves events from the database
   rpc GetLatestEvents(GetLatestEventsRequest) returns (GetLatestEventsResponse) {}
+
+  // update selected event attributes
+  rpc UpdateEvent(UpdateEventRequest) returns (UpdateEventResponse) {}
 }
