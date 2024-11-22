@@ -40,6 +40,7 @@ message PublishDriverDataRequest {
   repeated iracelog.car.v1.CarClass car_classes = 5;
   float session_time = 6;
   map<uint32, string> current_drivers = 7;
+  uint32 session_num = 8;
 }
 
 // sent when event is finished. Backend decides what to do with these informations
