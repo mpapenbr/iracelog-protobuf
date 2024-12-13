@@ -14,8 +14,10 @@ message PredictParam {
 message RaceParam {
   // predict for this duration
   google.protobuf.Duration duration = 1;
+  // the current time in the race session
+  google.protobuf.Duration session = 2;
   // how many laps are already completed
-  int32 lc = 2;
+  int32 lc = 3;
 }
 
 message StintParam {
@@ -35,6 +37,8 @@ message CarParam {
   bool in_pit = 2;
   // the lap of the stint the car is currently on
   int32 stint_lap = 3;
+  // how long does the car take to complete the current stint lap
+  google.protobuf.Duration remain_lap_time = 4;
 }
 
 message FuelParam {
@@ -61,10 +65,12 @@ message Part {
   google.protobuf.Duration start = 1;
   // duration measured from race start
   google.protobuf.Duration end = 2;
+  // the effective duration of that part
+  google.protobuf.Duration duration = 3;
 
   oneof part_type {
-    StintPart stint = 3;
-    PitPart pit = 4;
+    StintPart stint = 4;
+    PitPart pit = 5;
   }
 }
 
