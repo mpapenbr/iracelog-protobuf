@@ -1,0 +1,82 @@
+syntax = "proto3";
+package iracelog.predict.v1;
+
+import "google/protobuf/duration.proto";
+
+message PredictParam {
+  RaceParam race = 1;
+  StintParam stint = 2;
+  CarParam car = 3;
+  FuelParam fuel = 4;
+  PitParam pit = 5;
+}
+
+message RaceParam {
+  // predict for this (remaining) duration (for live sessions this is the iRacing SessionTimeRemain value)
+  google.protobuf.Duration duration = 1;
+  // the current time in the race session (only used to produce meaningful session times when used in a live race)
+  google.protobuf.Duration session = 2;
+  // how many laps are already completed
+  int32 lc = 3;
+}
+
+message StintParam {
+  google.protobuf.Duration avg_laptime = 1;
+  // how many laps can be done in one stint
+  int32 lps = 2;
+
+  // if provided this will be used for the inlap, otherwise avg_laptime
+  google.protobuf.Duration in_laptime = 3;
+  // if provided this will be used for the outlap, otherwise avg_laptime
+  google.protobuf.Duration out_laptime = 4;
+}
+message CarParam {
+  // where is the car right now on the track
+  float current_track_pos = 1;
+  // is the car in pits
+  bool in_pit = 2;
+  // the lap of the stint the car is currently on
+  int32 stint_lap = 3;
+  // how long does the car take to complete the current stint lap
+  google.protobuf.Duration remain_lap_time = 4;
+}
+
+message FuelParam {
+  // available tank volume
+  float tank_volume = 1;
+  // how many units can be refueled per second
+  float refuel_rate = 2;
+  // how many units does the car burn per lap
+  float lap_consumption = 3;
+}
+
+message PitParam {
+  // the overall pit time to use for calculation
+  google.protobuf.Duration overall = 1;
+  // the time the car uses when driving in the pit lane
+  google.protobuf.Duration lane = 2;
+}
+
+message PredictResult {
+  repeated Part parts = 1;
+}
+message Part {
+  // duration measured from race start
+  google.protobuf.Duration start = 1;
+  // duration measured from race start
+  google.protobuf.Duration end = 2;
+  // the effective duration of that part
+  google.protobuf.Duration duration = 3;
+
+  oneof part_type {
+    StintPart stint = 4;
+    PitPart pit = 5;
+  }
+}
+
+message StintPart {
+  int32 laps = 1;
+  int32 lap_start = 2;
+  int32 lap_end = 3;
+}
+message PitPart {}

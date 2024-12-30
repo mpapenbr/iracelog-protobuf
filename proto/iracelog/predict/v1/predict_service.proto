@@ -1,0 +1,46 @@
+syntax = "proto3";
+package iracelog.predict.v1;
+
+import "iracelog/common/v1/common.proto";
+import "iracelog/predict/v1/predict.proto";
+
+// functions around predicting a race outcome
+service PredictService {
+  rpc PredictRace(PredictRaceRequest) returns (PredictRaceResponse) {}
+  rpc GetLivePredictParam(GetLivePredictParamRequest) returns (GetLivePredictParamResponse) {}
+  // used for development on existing events
+  rpc GetPredictParam(GetPredictParamRequest) returns (GetPredictParamResponse) {}
+}
+
+message PredictRaceRequest {
+  PredictParam param = 1;
+}
+message PredictRaceResponse {
+  PredictResult result = 1;
+}
+
+message GetLivePredictParamRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+  string car_num = 2;
+  LaptimeSelector laptime_selector = 3;
+}
+message GetLivePredictParamResponse {
+  PredictParam param = 1;
+}
+
+message GetPredictParamRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+  iracelog.common.v1.StartSelector start_selector = 2;
+  string car_num = 3;
+  LaptimeSelector laptime_selector = 4;
+}
+message GetPredictParamResponse {
+  PredictParam param = 1;
+}
+
+enum LaptimeSelector {
+  LAPTIME_SELECTOR_UNSPECIFIED = 0;
+  LAPTIME_SELECTOR_LAST = 1;
+  LAPTIME_SELECTOR_CURRENT_STINT_AVG = 2;
+  LAPTIME_SELECTOR_PREVIOUS_STINT_AVG = 3;
+}
