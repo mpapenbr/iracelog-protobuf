@@ -4,7 +4,7 @@ modules:
     name: buf.build/mpapenbr/iracelog
 lint:
   use:
-    - DEFAULT
+    - STANDARD
 breaking:
   use:
     - FILE
