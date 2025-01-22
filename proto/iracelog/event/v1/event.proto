@@ -21,6 +21,7 @@ message Event {
   repeated Session sessions = 13;
   float pit_speed = 14;
   ReplayInfo replay_info = 15;
+  int32 ir_sub_session_id = 16;
 }
 
 message Session {
