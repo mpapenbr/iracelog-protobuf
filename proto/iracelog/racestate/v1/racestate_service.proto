@@ -16,6 +16,10 @@ service RaceStateService {
   rpc GetStates(GetStatesRequest) returns (GetStatesResponse);
   rpc GetSpeedmaps(GetSpeedmapsRequest) returns (GetSpeedmapsResponse);
   rpc GetDriverData(GetDriverDataRequest) returns (GetDriverDataResponse);
+
+  rpc GetStateStream(GetStateStreamRequest) returns (stream GetStateStreamResponse);
+  rpc GetSpeedmapStream(GetSpeedmapStreamRequest) returns (stream GetSpeedmapStreamResponse);
+  rpc GetDriverDataStream(GetDriverDataStreamRequest) returns (stream GetDriverDataStreamResponse);
 }
 
 message PublishStateRequest {
@@ -87,4 +91,32 @@ message GetDriverDataResponse {
   repeated PublishDriverDataRequest driver_data = 1;
   google.protobuf.Timestamp last_ts = 2;
   float last_session_time = 3;
+}
+
+message GetStateStreamRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  iracelog.common.v1.StartSelector start = 2;
+  int32 num = 3;
+}
+message GetSpeedmapStreamRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  iracelog.common.v1.StartSelector start = 2;
+  int32 num = 3;
+}
+message GetDriverDataStreamRequest {
+  iracelog.common.v1.EventSelector event = 1;
+  iracelog.common.v1.StartSelector start = 2;
+  int32 num = 3;
+}
+
+message GetStateStreamResponse {
+  PublishStateRequest state = 1;
+}
+
+message GetSpeedmapStreamResponse {
+  PublishSpeedmapRequest speedmap = 1;
+}
+
+message GetDriverDataStreamResponse {
+  PublishDriverDataRequest driver_data = 1;
 }
