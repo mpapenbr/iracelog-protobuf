@@ -53,10 +53,16 @@ message SessionTimeSelector {
   google.protobuf.Duration duration = 2;
 }
 
+// this selector describes a point used as the lower bound (inclusive) for a range
 message StartSelector {
   oneof arg {
+    // describes the point where a database record was created
     google.protobuf.Timestamp record_stamp = 1;
+    // legacy variant of session_time_selector. This session_time is associated with the race session.
     float session_time = 2;
     SessionTimeSelector session_time_selector = 3;
+    // describes the (internal) id of a database record
+    // this attribute is mainly used for follow-up range requests like GetStatesRequest
+    uint32 id = 4;
   }
 }

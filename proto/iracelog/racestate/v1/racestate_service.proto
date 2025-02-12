@@ -79,18 +79,21 @@ message GetStatesResponse {
   repeated PublishStateRequest states = 1;
   google.protobuf.Timestamp last_ts = 2;
   float last_session_time = 3;
+  uint32 last_id = 4;
 }
 
 message GetSpeedmapsResponse {
   repeated PublishSpeedmapRequest speedmaps = 1;
   google.protobuf.Timestamp last_ts = 2;
   float last_session_time = 3;
+  uint32 last_id = 4;
 }
 
 message GetDriverDataResponse {
   repeated PublishDriverDataRequest driver_data = 1;
   google.protobuf.Timestamp last_ts = 2;
   float last_session_time = 3;
+  uint32 last_id = 4;
 }
 
 message GetStateStreamRequest {
