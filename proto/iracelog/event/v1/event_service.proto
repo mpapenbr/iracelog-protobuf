@@ -10,7 +10,9 @@ import "iracelog/racestate/v1/racestate.proto";
 import "iracelog/speedmap/v1/speedmap.proto";
 import "iracelog/track/v1/track.proto";
 
-message GetEventsRequest {}
+message GetEventsRequest {
+  iracelog.common.v1.TenantSelector tenant_selector = 1;
+}
 
 message GetEventRequest {
   iracelog.common.v1.EventSelector event_selector = 1;
@@ -19,6 +21,7 @@ message GetEventRequest {
 message GetLatestEventsRequest {
   int32 offset = 1;
   int32 limit = 2;
+  iracelog.common.v1.TenantSelector tenant_selector = 3;
 }
 message GetLatestEventsResponse {
   repeated Event events = 1;

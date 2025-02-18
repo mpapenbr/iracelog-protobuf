@@ -1,0 +1,13 @@
+syntax = "proto3";
+package iracelog.container.v1;
+
+import "iracelog/event/v1/event.proto";
+import "iracelog/track/v1/track.proto";
+
+// Basic event data
+message EventContainer {
+  iracelog.event.v1.Event event = 1;
+  iracelog.track.v1.Track track = 2;
+  // this is the owner of the event (e.g. the tenant name)
+  string owner = 3;
+}

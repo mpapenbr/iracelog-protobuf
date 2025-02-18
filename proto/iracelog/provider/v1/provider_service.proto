@@ -40,7 +40,9 @@ message UnregisterAllResponse {
   repeated LiveEventContainer events = 1;
 }
 
-message ListLiveEventsRequest {}
+message ListLiveEventsRequest {
+  iracelog.common.v1.TenantSelector tenant_selector = 1;
+}
 message LiveEventContainer {
   iracelog.event.v1.Event event = 1;
   iracelog.track.v1.Track track = 2;
