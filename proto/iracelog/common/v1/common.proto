@@ -66,3 +66,19 @@ message StartSelector {
     uint32 id = 4;
   }
 }
+
+// Definition of UUID
+message UUID {
+  // the UUID as a string
+  string id = 1;
+}
+
+// Options to reference a tenant
+message TenantSelector {
+  oneof arg {
+    // the tenant name
+    string name = 1;
+    // the tenant UUID
+    UUID external_id = 2;
+  }
+}

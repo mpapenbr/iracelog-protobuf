@@ -1,0 +1,52 @@
+syntax = "proto3";
+package iracelog.tenant.v1;
+
+import "iracelog/tenant/v1/tenant.proto";
+
+service TenantService {
+  rpc CreateTenant(CreateTenantRequest) returns (CreateTenantResponse);
+  rpc DeleteTenant(DeleteTenantRequest) returns (DeleteTenantResponse);
+  rpc UpdateTenant(UpdateTenantRequest) returns (UpdateTenantResponse);
+  rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
+  rpc GetTenants(GetTenantsRequest) returns (GetTenantsResponse);
+  // signals the server to reload the tenants from the database and reinits the tenant cache
+  rpc ReloadTenants(ReloadTenantsRequest) returns (ReloadTenantsResponse);
+}
+
+message CreateTenantRequest {
+  string name = 1;
+  string api_key = 2;
+  bool is_active = 3;
+}
+message CreateTenantResponse {
+  Tenant tenant = 1;
+}
+message DeleteTenantRequest {
+  uint32 id = 1;
+}
+message DeleteTenantResponse {}
+
+message UpdateTenantRequest {
+  uint32 id = 1;
+  string name = 2;
+  string api_key = 3;
+  bool is_active = 4;
+}
+message UpdateTenantResponse {
+  Tenant tenant = 1;
+}
+
+message GetTenantRequest {
+  uint32 id = 1;
+}
+message GetTenantResponse {
+  Tenant tenant = 1;
+}
+
+message GetTenantsRequest {}
+message GetTenantsResponse {
+  repeated Tenant tenants = 1;
+}
+
+message ReloadTenantsRequest {}
+message ReloadTenantsResponse {}
