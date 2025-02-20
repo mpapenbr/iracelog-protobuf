@@ -4,9 +4,7 @@ package iracelog.tenant.v1;
 import "iracelog/common/v1/common.proto";
 
 message Tenant {
-  uint32 id = 1;
-  iracelog.common.v1.UUID external_id = 2;
-  string name = 3;
-  string api_key = 4;
-  bool is_active = 5;
+  iracelog.common.v1.UUID external_id = 1;
+  string name = 2;
+  bool is_active = 3;
 }
