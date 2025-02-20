@@ -1,6 +1,7 @@
 syntax = "proto3";
 package iracelog.tenant.v1;
 
+import "iracelog/common/v1/common.proto";
 import "iracelog/tenant/v1/tenant.proto";
 
 service TenantService {
@@ -22,12 +23,12 @@ message CreateTenantResponse {
   Tenant tenant = 1;
 }
 message DeleteTenantRequest {
-  uint32 id = 1;
+  iracelog.common.v1.TenantSelector tenant = 1;
 }
 message DeleteTenantResponse {}
 
 message UpdateTenantRequest {
-  uint32 id = 1;
+  iracelog.common.v1.TenantSelector tenant = 1;
   string name = 2;
   string api_key = 3;
   bool is_active = 4;
@@ -37,7 +38,7 @@ message UpdateTenantResponse {
 }
 
 message GetTenantRequest {
-  uint32 id = 1;
+  iracelog.common.v1.TenantSelector tenant = 1;
 }
 message GetTenantResponse {
   Tenant tenant = 1;
