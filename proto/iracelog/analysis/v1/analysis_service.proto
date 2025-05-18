@@ -12,7 +12,25 @@ message GetAnalysisResponse {
   Analysis analysis = 1;
   repeated SnapshotData snapshots = 2;
 }
-
+message ComputeAnalysisRequest {
+  iracelog.common.v1.EventSelector event_selector = 1;
+  AnalysisComponent component = 2;
+  AnalysisPersistMode persist_mode = 3;
+}
+message ComputeAnalysisResponse {
+  Analysis analysis = 1;
+}
+enum AnalysisComponent {
+  ANALYSIS_COMPONENT_UNSPECIFIED = 0;
+  ANALYSIS_COMPONENT_ALL = 1;
+  ANALYSIS_COMPONENT_RACEGRAPH = 2;
+}
+enum AnalysisPersistMode {
+  ANALYSIS_PERSIST_MODE_UNSPECIFIED = 0;
+  ANALYSIS_PERSIST_MODE_ON = 1;
+  ANALYSIS_PERSIST_MODE_OFF = 2;
+}
 service AnalysisService {
   rpc GetAnalysis(GetAnalysisRequest) returns (GetAnalysisResponse) {}
+  rpc ComputeAnalysis(ComputeAnalysisRequest) returns (ComputeAnalysisResponse) {}
 }
