@@ -65,6 +65,8 @@ message VersionCheckResponse {
   string provided_racelogger_version = 2;
   string supported_racelogger_version = 3;
   bool racelogger_compatible = 4;
+  // if request included credentials (via header) this attribute will be set
+  bool valid_credentials = 5;
 }
 message PingRequest {
   int32 num = 1;
