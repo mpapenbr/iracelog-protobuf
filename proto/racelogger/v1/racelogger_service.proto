@@ -1,0 +1,35 @@
+syntax = "proto3";
+package racelogger.v1;
+
+message GetStatusStreamRequest {
+  // No fields needed for this request
+}
+message GetStatusStreamResponse {
+  bool backend_available = 1;
+  bool backend_compatible = 2;
+  bool simulation_running = 3;
+  bool telemetry_available = 4;
+  bool recording_active = 5;
+  bool valid_credentials = 6;
+  int32 current_session_num = 7; // Current session number in the event
+  repeated RaceSession race_sessions = 8;
+}
+message RaceSession {
+  uint32 num = 1; // SessionInfo[].SessionNum
+  string name = 2; // Name of the race session (SessionInfo[].SessionName)
+}
+
+message StartRecordingRequest {
+  string name = 1; // Name of the recording session
+  repeated string descriptions = 2; // Descriptions for the recording session. Will be assigned in the order to each race session of the event.
+}
+message StartRecordingResponse {}
+
+message StopRecordingRequest {}
+message StopRecordingResponse {}
+
+service RaceloggerService {
+  rpc GetStatusStream(GetStatusStreamRequest) returns (stream GetStatusStreamResponse);
+  rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
+  rpc StopRecording(StopRecordingRequest) returns (StopRecordingResponse);
+}
