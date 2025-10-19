@@ -1,0 +1,16 @@
+syntax = "proto3";
+package iracelog.user.v1;
+
+import "iracelog/user/v1/user.proto";
+
+service UserService {
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse) {}
+}
+
+message GetUserInfoRequest {
+  string tenant_id = 1; // Unique identifier for the tenant
+}
+
+message GetUserInfoResponse {
+  UserInfo user_info = 1;
+}
