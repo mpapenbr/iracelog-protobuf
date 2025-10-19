@@ -1,0 +1,17 @@
+syntax = "proto3";
+package iracelog.user.v1;
+
+message UserInfo {
+  string user_id = 1; // Unique identifier for the user
+  string username = 2; // Username of the user
+  string email = 3; // Email address of the user
+  repeated string roles = 4; // Roles assigned to the user
+  repeated ScopedRole scoped_roles = 5; // scoped roles assigned to the user
+  bool is_admin = 6; // Indicates if the user is an admin
+  bool is_editor = 7; // Indicates if the user is an editor
+}
+
+message ScopedRole {
+  string role = 1; // The role assigned within the scope
+  repeated string scopes = 2; // the scopes for the role (e.g., tenants)
+}

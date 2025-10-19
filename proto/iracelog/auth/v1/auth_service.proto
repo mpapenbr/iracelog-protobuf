@@ -1,0 +1,19 @@
+syntax = "proto3";
+package iracelog.auth.v1;
+
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+}
+
+message LoginRequest {
+  string redirect_url = 1; // URL to redirect after login
+}
+
+message LoginResponse {
+  string login_url = 1; // URL to redirect for login. Client should redirect user to this URL.
+}
+
+message LogoutRequest {}
+
+message LogoutResponse {}

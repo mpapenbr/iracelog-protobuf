@@ -4,6 +4,18 @@ Protobuf definitions for iRacelog
 
 ## Cheatsheet
 
+Login in VS code
+
+```shell
+buf registry login --prompt
+```
+
+Push to a label
+
+```shell
+buf push . --label mpapenbr/issueXX
+```
+
 See also [the manual][check-breaking]
 
 Check breaking changes against main version

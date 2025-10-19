@@ -1,0 +1,12 @@
+syntax = "proto3";
+package iracelog.settings.v1;
+
+service SettingsService {
+  rpc GetServerSettings(GetServerSettingsRequest) returns (GetServerSettingsResponse) {}
+}
+
+message GetServerSettingsRequest {}
+
+message GetServerSettingsResponse {
+  bool supports_login = 1; // Indicates if login is supported
+}
